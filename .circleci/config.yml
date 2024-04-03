@@ -15,6 +15,7 @@ jobs:
           command: |
             echo "Inside the Build and push Docker image step "
             docker --version # print the version for logging
+            ls
             cd ../udagram-reverseproxy
             docker build -t "$DOCKER_USERNAME"/reverseproxy .        
             docker tag "$DOCKER_USERNAME"/reverseproxy "$DOCKER_USERNAME"/reverseproxy:1.0.0
