@@ -21,6 +21,7 @@ const components = [...entryComponents];
     ReactiveFormsModule,
     ApiModule
   ],
+  entryComponents: entryComponents,
   declarations: components,
   exports: components,
   providers: []

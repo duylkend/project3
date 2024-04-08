@@ -1,15 +1,29 @@
 ## Build
-FROM beevelop/ionic:latest AS ionic
+FROM node:10-alpine as builder
+## Build
+# FROM beevelop/ionic:latest AS ionic
 # Create app directory
+RUN node -v
 WORKDIR /usr/src/app
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
-RUN npm ci
+
+RUN npm i -g ionic cordova
+
+ENTRYPOINT [“ionic”]
+# Install app dependencies
+RUN npm install
+
 # Bundle app source
 COPY . .
+
+RUN node -v
+# Build Ionic app
 RUN ionic build
-## Run
+
+## Run 
 FROM nginx:alpine
-#COPY www /usr/share/nginx/html
-COPY --from=ionic  /usr/src/app/www /usr/share/nginx/html
+
+# Copy built files from the previous stage
+COPY --from=builder /usr/src/app/www /usr/share/nginx/html
