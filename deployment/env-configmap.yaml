@@ -9,4 +9,4 @@ data:
   AWS_PROFILE: default
   AWS_BUCKET: pro3-196343632393
   JWT_SECRET: testing
-  URL: http://af29b6422d9e9481b91667ada16dc8de-418795457.us-east-1.elb.amazonaws.com
+  URL: http://af2d3b420ed3248c5996a097db12a53d-803780954.us-east-1.elb.amazonaws.com

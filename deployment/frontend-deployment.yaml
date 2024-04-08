@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: frontend
@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: duylkend/udagram-frontend:1.0
+          image: duylkend/udagram-frontend:v3
           ports:
-            - containerPort: 8100
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: env-configmap

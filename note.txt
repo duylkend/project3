@@ -1,0 +1,33 @@
+aws eks update-kubeconfig --region us-east-1 --name project3
+
+## Apply env variables and secrets
+kubectl apply -f aws-secret.yaml
+kubectl apply -f env-secret.yaml
+kubectl apply -f env-configmap.yaml
+## Deployments - Double check the Dockerhub image name and version in the deployment files
+kubectl apply -f backend-feed-deployment.yaml
+## Do the same for other three deployment files
+## Service
+kubectl apply -f backend-feed-service.yaml
+## Do the same for other three service files
+
+kubectl apply -f backend-user-deployment.yaml
+kubectl apply -f backend-user-service.yaml
+kubectl describe pod ....
+
+kubectl apply -f reverseproxy-deployment.yaml
+kubectl apply -f reverseproxy-service.yaml
+
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+
+kubectl expose deployment frontend --type=LoadBalancer --name=publicfrontend
+kubectl expose deployment reverseproxy --type=LoadBalancer --name=publicreverseproxy
+
+docker build . -t duylkend/udagram-frontend:v3
+docker push duylkend/udagram-frontend:v3
+kubectl set image deployment frontend frontend=duylkend/udagram-frontend:v2
+
+kubectl delete service publicfrontend
+kubectl delete service frontend
+kubectl delete deployments/frontend
