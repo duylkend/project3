@@ -17,6 +17,13 @@ spec:
           image: duylkend/udagram-api-feed:v1
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "2048Mi"
+              cpu: "500m"
           envFrom:
             - configMapRef:
                 name: env-configmap
