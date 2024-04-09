@@ -52,4 +52,12 @@ kubectl get services
 
 kubectl autoscale deployment backend-user --cpu-percent=50 --min=2 --max=3
 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+kubectl get deployment metrics-server -n kube-system
+
 kubectl delete hpa hpa-backend-feed
+
+kubectl describe hpa hpa-backend-feed
+
+https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html
