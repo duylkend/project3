@@ -27,3 +27,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-configmap
+      autoscaler:
+        minReplicas: 2
+        maxReplicas: 3
+        metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              target:
+                type: Utilization
+                averageUtilization: 50

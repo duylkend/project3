@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: duylkend/udagram-frontend:v3
+          image: duylkend/udagram-frontend:v5
           ports:
             - containerPort: 80
           resources:

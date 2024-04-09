@@ -2,7 +2,7 @@ aws eks update-kubeconfig --region us-east-1 --name project3
 
 ## Apply env variables and secrets
 kubectl apply -f aws-secret.yaml
-kubectl apply -f env-secret.yaml
+kubectl apply -f env-secret.yamlkubectl apply -f env-secret.yaml
 kubectl apply -f env-configmap.yaml
 ## Deployments - Double check the Dockerhub image name and version in the deployment files
 kubectl apply -f backend-feed-deployment.yaml
@@ -24,10 +24,32 @@ kubectl apply -f frontend-service.yaml
 kubectl expose deployment frontend --type=LoadBalancer --name=publicfrontend
 kubectl expose deployment reverseproxy --type=LoadBalancer --name=publicreverseproxy
 
-docker build . -t duylkend/udagram-frontend:v3
-docker push duylkend/udagram-frontend:v3
-kubectl set image deployment frontend frontend=duylkend/udagram-frontend:v2
+docker build . -t duylkend/udagram-frontend:v5
+docker push duylkend/udagram-frontend:v5
+kubectl set image deployment frontend frontend=duylkend/udagram-frontend:v5
+
+## Kubernetes pods are deployed properly
+kubectl get pods 
+## Kubernetes services are set up properly
+kubectl describe services
+## You have horizontal scaling set against CPU usage
+kubectl describe hpa
 
 kubectl delete service publicfrontend
 kubectl delete service frontend
+kubectl delete service backend-feed
+kubectl delete service backend-user
+kubectl delete service reverseproxy
+kubectl delete service publicreverseproxy
+
 kubectl delete deployments/frontend
+kubectl delete deployments/backend-user
+kubectl delete deployments/backend-feed
+kubectl delete deployments/reverseproxy
+
+
+kubectl get services
+
+kubectl autoscale deployment backend-user --cpu-percent=50 --min=2 --max=3
+
+kubectl delete hpa hpa-backend-feed
